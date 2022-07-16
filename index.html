@@ -3,7 +3,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <meta name="theme-color" content="#FFE1C4">
+    <meta name="theme-color" content="#FFE1C4" />
     <title>Food Ninja</title>
     <!-- materialize icons, css & js -->
     <link type="text/css" href="/css/materialize.min.css" rel="stylesheet" />
@@ -47,46 +47,7 @@
     <!-- recipes -->
     <div class="recipes container grey-text text-darken-1">
       <p align="center">Testing Cache Versions</p>
-      <div class="card-panel recipe white row">
-        <img src="/img/dish.png" alt="recipe thumb" />
-        <div class="recipe-details">
-          <div class="recipe-title">Edame Noodles</div>
-          <div class="recipe-ingredients">Edame Beans, Noodels, Garlic oil</div>
-        </div>
-        <div class="recipe-delete">
-          <i class="material-icons">delete_outline</i>
-        </div>
-      </div>
-      <div class="card-panel recipe white row">
-        <img src="/img/dish.png" alt="recipe thumb" />
-        <div class="recipe-details">
-          <div class="recipe-title">Edame Noodles</div>
-          <div class="recipe-ingredients">Edame Beans, Noodels, Garlic oil</div>
-        </div>
-        <div class="recipe-delete">
-          <i class="material-icons">delete_outline</i>
-        </div>
-      </div>
-      <div class="card-panel recipe white row">
-        <img src="/img/dish.png" alt="recipe thumb" />
-        <div class="recipe-details">
-          <div class="recipe-title">Edame Noodles</div>
-          <div class="recipe-ingredients">Edame Beans, Noodels, Garlic oil</div>
-        </div>
-        <div class="recipe-delete">
-          <i class="material-icons">delete_outline</i>
-        </div>
-      </div>
-      <div class="card-panel recipe white row">
-        <img src="/img/dish.png" alt="recipe thumb" />
-        <div class="recipe-details">
-          <div class="recipe-title">Edame Noodles</div>
-          <div class="recipe-ingredients">Edame Beans, Noodels, Garlic oil</div>
-        </div>
-        <div class="recipe-delete">
-          <i class="material-icons">delete_outline</i>
-        </div>
-      </div>
+      
     </div>
 
     <div class="center">
@@ -127,6 +88,23 @@
       </form>
     </div>
 
+    <!-- Firebase SDK Connection -->
+    <script src="https://gstatic.com/firebasejs/6.0.1/firebase-app.js"></script>
+    <script src="https://gstatic.com/firebasejs/6.0.1/firebase-firestore.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyCIc3dxHhuMvX5iP78h6FsltvPJTRrLdbQ",
+        authDomain: "vitiya99-pwa-with-vanilla-js.firebaseapp.com",
+        projectId: "vitiya99-pwa-with-vanilla-js",
+        storageBucket: "vitiya99-pwa-with-vanilla-js.appspot.com",
+        messagingSenderId: "1004098324666",
+        appId: "1:1004098324666:web:967f6d1647fa4a791f1a83",
+        measurementId: "G-G4YW007TY5",
+      };
+      firebase.initializeApp(firebaseConfig)
+      const db = firebase.firestore()
+    </script>
+    <script src="/js/database.js"></script>
     <script src="/js/scripts.js"></script>
     <script src="/js/app.js"></script>
   </body>

@@ -1,6 +1,6 @@
-const staticCache = "food-pwa-site-static-v1.0.2";
-const dynamicCache = "food-pwa-site-dynamic-v1.0.2";
-const maxCacheLimit = 10
+const staticCache = "food-pwa-site-static-v1.2.1";
+const dynamicCache = "food-pwa-site-dynamic-v1.2.1";
+const maxCacheLimit = 10;
 const assets = [
   "/",
   "/index.html",
@@ -66,24 +66,26 @@ this.addEventListener("activate", (event) => {
 
 // Fetch events and Use caches
 this.addEventListener("fetch", (event) => {
-  event.respondWith(
-    caches
-      .match(event.request)
-      .then((cacheRes) => {
-        return (
-          cacheRes ||
-          fetch(event.request).then(async (fetchRes) => {
-            const cache = await caches.open(dynamicCache);
-            cache.put(event.request.url, fetchRes.clone());
-            handleCacheLimit(dynamicCache, maxCacheLimit)
-            return fetchRes;
-          })
-        );
-      })
-      .catch(() => {
-        if (event.request.url.indexOf(".html") > -1) {
-          return caches.match("/pages/fallback.html");
-        }
-      })
-  );
+  if (event.request.url.indexOf("firestore.googleapis.com") === -1) {
+    event.respondWith(
+      caches
+        .match(event.request)
+        .then((cacheRes) => {
+          return (
+            cacheRes ||
+            fetch(event.request).then(async (fetchRes) => {
+              const cache = await caches.open(dynamicCache);
+              cache.put(event.request.url, fetchRes.clone());
+              handleCacheLimit(dynamicCache, maxCacheLimit);
+              return fetchRes;
+            })
+          );
+        })
+        .catch(() => {
+          if (event.request.url.indexOf(".html") > -1) {
+            return caches.match("/pages/fallback.html");
+          }
+        })
+    );
+  }
 });
