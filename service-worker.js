@@ -1,5 +1,6 @@
 const staticCache = "food-pwa-site-static-v1.0.2";
 const dynamicCache = "food-pwa-site-dynamic-v1.0.2";
+const maxCacheLimit = 10
 const assets = [
   "/",
   "/index.html",
@@ -13,6 +14,20 @@ const assets = [
   "https://fonts.gstatic.com/s/materialicons/v47/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2",
   "/pages/fallback.html",
 ];
+
+// Limit caching (delete oldest cache items)
+const handleCacheLimit = (name, size) => {
+  caches.open(name).then((cache) => {
+    cache.keys().then((keys) => {
+      if (keys.length > size) {
+        cache
+          .delete(keys[0])
+          .then(limitCacheSize(name, size))
+          .catch((error) => console.error(error));
+      }
+    });
+  });
+};
 
 // Install Service Worker and Cache all static content
 this.addEventListener("install", (event) => {
@@ -59,11 +74,16 @@ this.addEventListener("fetch", (event) => {
           cacheRes ||
           fetch(event.request).then(async (fetchRes) => {
             const cache = await caches.open(dynamicCache);
-              cache.put(event.request.url, fetchRes.clone());
-              return fetchRes;
+            cache.put(event.request.url, fetchRes.clone());
+            handleCacheLimit(dynamicCache, maxCacheLimit)
+            return fetchRes;
           })
         );
       })
-      .catch(() => caches.match("/pages/fallback.html"))
+      .catch(() => {
+        if (event.request.url.indexOf(".html") > -1) {
+          return caches.match("/pages/fallback.html");
+        }
+      })
   );
 });
